@@ -27,6 +27,16 @@ export default async function handler(req, res) {
     const prompt = body && body.prompt;
     if (!prompt) return res.status(400).json({ error: 'Missing prompt' });
 
+    // Diagnostic shortcut: POST { prompt: "__status_check__" } to get a safe
+    // boolean report about whether server-side env vars are configured.
+    if (prompt === '__status_check__') {
+      return res.status(200).json({
+        ok: true,
+        hasGenerativeKey: Boolean(process.env.GENERATIVE_API_KEY),
+        hasViteKey: Boolean(process.env.VITE_IMG_API_KEY),
+      });
+    }
+
     // Prefer a server-side key named GENERATIVE_API_KEY (set this in Vercel).
     // For backward compatibility, we also accept VITE_IMG_API_KEY if present.
     const apiKey = process.env.GENERATIVE_API_KEY || process.env.VITE_IMG_API_KEY || '';
