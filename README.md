@@ -1,4 +1,8 @@
-# Mia Kids Chatbot — Quick Setup & Vercel Deploy (for non-developers)
+# Story Readers
+
+This chatbot is used in Project A of AI Toolkit for Students.
+
+Vercel page: [https://vercel.com/boysbytes-projects/edu-story-readers-chatbot-j9au](https://vercel.com/boysbytes-projects/edu-story-readers-chatbot-j9au)
 
 This repository contains a small React app (Vite) that runs the "Mia Kids Chatbot" component. It is ready to deploy on Vercel as a static site.
 
