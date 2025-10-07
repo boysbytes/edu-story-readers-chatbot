@@ -14,12 +14,8 @@ The app is configured to **allow embedding from ANY domain**:
 {
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/:path*",
       "headers": [
-        {
-          "key": "X-Frame-Options",
-          "value": "ALLOWALL"
-        },
         {
           "key": "Content-Security-Policy",
           "value": "frame-ancestors *"
@@ -29,6 +25,11 @@ The app is configured to **allow embedding from ANY domain**:
   ]
 }
 ```
+
+**Note**: We use `Content-Security-Policy` instead of `X-Frame-Options` because:
+- Modern browsers prefer CSP over X-Frame-Options
+- CSP provides more flexibility (wildcards, multiple domains)
+- `X-Frame-Options: ALLOWALL` is not a valid value
 
 ---
 
@@ -42,12 +43,8 @@ The app is configured to **allow embedding from ANY domain**:
 {
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/:path*",
       "headers": [
-        {
-          "key": "X-Frame-Options",
-          "value": "ALLOWALL"
-        },
         {
           "key": "Content-Security-Policy",
           "value": "frame-ancestors *"
@@ -71,12 +68,8 @@ The app is configured to **allow embedding from ANY domain**:
 {
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/:path*",
       "headers": [
-        {
-          "key": "X-Frame-Options",
-          "value": "SAMEORIGIN"
-        },
         {
           "key": "Content-Security-Policy",
           "value": "frame-ancestors 'self'"
@@ -100,7 +93,7 @@ The app is configured to **allow embedding from ANY domain**:
 {
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/:path*",
       "headers": [
         {
           "key": "Content-Security-Policy",
@@ -111,8 +104,6 @@ The app is configured to **allow embedding from ANY domain**:
   ]
 }
 ```
-
-**Note**: Remove `X-Frame-Options` header when using specific domains (CSP takes precedence)
 
 **Pros**: Secure and flexible  
 **Cons**: Need to update list when adding new domains
@@ -127,7 +118,7 @@ The app is configured to **allow embedding from ANY domain**:
 {
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/:path*",
       "headers": [
         {
           "key": "Content-Security-Policy",
