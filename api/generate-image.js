@@ -46,15 +46,29 @@ export default async function handler(req, res) {
 
     const payload = { instances: { prompt }, parameters: { sampleCount: 1 } };
 
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
+    let response;
+    try {
+      response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+    } catch (fetchErr) {
+      console.error('generate-image fetch failed:', fetchErr && fetchErr.message ? fetchErr.message : fetchErr);
+      return res.status(502).json({ error: 'Upstream fetch failed', message: String(fetchErr && fetchErr.message ? fetchErr.message : fetchErr) });
+    }
 
     if (!response.ok) {
-      const text = await response.text();
-      return res.status(502).json({ error: 'Upstream API error', status: response.status, details: text });
+      // Try to read body safely; limit length to avoid huge outputs
+      let text = '';
+      try {
+        const full = await response.text();
+        text = full ? full.substring(0, 2000) : '';
+      } catch (e) {
+        console.error('Failed to read upstream response body:', e);
+      }
+      console.error('generate-image upstream error', { status: response.status, bodySnippet: text });
+      return res.status(502).json({ error: 'Upstream API error', status: response.status, bodySnippet: text });
     }
 
     const json = await response.json();
