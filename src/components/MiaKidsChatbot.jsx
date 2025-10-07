@@ -125,39 +125,40 @@ const STEPS = [
 
 function Header({ step, totalQuestions }) {
 	return (
-		<div className="sticky top-0 z-20 backdrop-blur-md bg-white/70 border-b border-slate-200">
-			<div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+		<div className="sticky top-0 z-20 backdrop-blur-md bg-gradient-to-r from-purple-500/90 via-pink-500/90 to-orange-500/90 border-b-4 border-white shadow-xl">
+			<div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
 				<div className="flex items-center gap-3">
-					<div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-pink-300 to-blue-300 grid place-items-center text-2xl shadow-md flex-shrink-0">
+					<div className="w-14 h-14 rounded-2xl bg-white/95 grid place-items-center text-3xl shadow-lg flex-shrink-0 transform hover:scale-110 transition-transform duration-200 animate-bounce-slow">
 						🦉
 					</div>
 					<div>
-						<p className="text-xl font-extrabold leading-tight font-sans">
+						<p className="text-2xl font-black leading-tight font-sans text-white drop-shadow-lg">
 							Teacher Bot — Mia's Story
 						</p>
-						<p className="text-xs text-slate-600 font-sans">
-							For Year 1–2 students (Malaysia)
+						<p className="text-xs text-white/90 font-bold tracking-wide font-sans">
+							✨ For Year 1–4 Students ✨
 						</p>
 					</div>
 				</div>
 				<div
-					className="flex flex-col items-end gap-1"
+					className="flex flex-col items-end gap-1 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-xl"
 					aria-label="Progress"
 				>
-					<p className="text-xs font-semibold text-slate-700">
-						Progress: {step}/{totalQuestions}
+					<p className="text-xs font-bold text-white">
+						Progress
 					</p>
-					<div className="flex items-center gap-1">
+					<p className="text-2xl font-black text-white">
+						{step}/{totalQuestions}
+					</p>
+					<div className="flex items-center gap-1.5 mt-1">
 						{Array.from({ length: totalQuestions }).map((_, i) => (
 							<div
 								key={i}
-								className={
-									"w-4 h-4 rounded-full transition-colors duration-300 shadow-inner " +
-									(i < step
-										? "bg-green-500 ring-2 ring-green-700"
-										: "bg-slate-300")
-								}
-								title={`Question ${i + 1}`}
+								className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+									i < step
+										? "bg-green-400 scale-125 shadow-lg"
+										: "bg-white/40"
+								}`}
 							/>
 						))}
 					</div>
@@ -170,24 +171,24 @@ function Header({ step, totalQuestions }) {
 function ChatBubble({ role, children }) {
 	const isBot = role === "bot";
 	return (
-		<div className={`flex ${isBot ? "justify-start" : "justify-end"} px-1`}>
+		<div className={`flex ${isBot ? "justify-start" : "justify-end"} px-1 animate-fade-in`}>
 			{isBot && (
-				<div className="w-10 h-10 mt-1 rounded-full bg-yellow-200 grid place-items-center text-xl shadow-md flex-shrink-0">
+				<div className="w-12 h-12 mt-1 rounded-full bg-gradient-to-br from-yellow-300 to-orange-400 grid place-items-center text-2xl shadow-lg flex-shrink-0 border-3 border-white transform hover:scale-110 transition-transform">
 					👩‍🏫
 				</div>
 			)}
 			<div
 				className={
-					"max-w-[90%] sm:max-w-[72%] rounded-3xl px-5 py-4 shadow-lg text-slate-900 text-lg font-medium " +
+					"max-w-[90%] sm:max-w-[72%] rounded-3xl px-6 py-5 shadow-2xl text-slate-900 text-lg font-semibold leading-relaxed transform hover:scale-[1.02] transition-all " +
 					(isBot
-						? "bg-white ml-2 rounded-tl-none"
-						: "bg-green-100 mr-2 rounded-br-none")
+						? "bg-gradient-to-br from-white to-blue-50 ml-3 rounded-tl-none border-2 border-blue-200"
+						: "bg-gradient-to-br from-green-100 to-emerald-200 mr-3 rounded-br-none border-2 border-green-300")
 				}
 			>
 				{children}
 			</div>
 			{!isBot && (
-				<div className="w-10 h-10 mt-1 rounded-full bg-green-200 grid place-items-center text-xl shadow-md flex-shrink-0">
+				<div className="w-12 h-12 mt-1 rounded-full bg-gradient-to-br from-green-300 to-teal-400 grid place-items-center text-2xl shadow-lg flex-shrink-0 border-3 border-white transform hover:scale-110 transition-transform">
 					👧
 				</div>
 			)}
@@ -198,18 +199,18 @@ function ChatBubble({ role, children }) {
 function BigButton({ label, onClick, ariaLabel, tone = "primary", disabled = false }) {
 	const toneClass =
 		tone === "primary"
-			? "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-400/50"
+			? "bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-blue-500/50 border-blue-400"
 			: tone === "danger"
-			? "bg-rose-500 hover:bg-rose-600 text-white shadow-rose-400/50"
-			: "bg-slate-200 hover:bg-slate-300 text-slate-900 shadow-slate-400/50";
-	const disabledClass = disabled ? "opacity-60 cursor-not-allowed" : "";
+			? "bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white shadow-rose-500/50 border-rose-400"
+			: "bg-gradient-to-r from-slate-200 to-slate-300 hover:from-slate-300 hover:to-slate-400 text-slate-900 shadow-slate-500/50 border-slate-400";
+	const disabledClass = disabled ? "opacity-60 cursor-not-allowed" : "hover:scale-[1.03] active:scale-[0.97]";
 
 	return (
 		<button
 			onClick={onClick}
 			aria-label={ariaLabel || label}
 			disabled={disabled}
-			className={`w-full text-left rounded-xl px-6 py-4 min-h-[64px] text-xl font-extrabold transition duration-150 transform hover:scale-[1.01] active:scale-[0.98] shadow-lg ${toneClass} ${disabledClass} focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-blue-300`}
+			className={`w-full text-left rounded-2xl px-7 py-5 min-h-[72px] text-xl font-black transition-all duration-200 transform shadow-xl border-4 ${toneClass} ${disabledClass} focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-yellow-400`}
 		>
 			{label}
 		</button>
@@ -218,12 +219,12 @@ function BigButton({ label, onClick, ariaLabel, tone = "primary", disabled = fal
 
 function ImageCard({ src }) {
 	return (
-		<div className="mt-4 rounded-xl overflow-hidden border-4 border-white shadow-2xl shadow-indigo-200/50 bg-white">
+		<div className="mt-5 rounded-2xl overflow-hidden border-4 border-white shadow-2xl shadow-purple-300/60 bg-white transform hover:scale-[1.02] transition-transform animate-fade-in">
 			<img
 				src={src}
 				alt="Generated image for Mia's story moment"
 				className="w-full h-auto object-cover"
-				style={{ minHeight: "180px" }}
+				style={{ minHeight: "200px" }}
 			/>
 		</div>
 	);
@@ -231,10 +232,10 @@ function ImageCard({ src }) {
 
 function ImageLoader() {
 	return (
-		<div className="mt-2 p-4 animate-pulse">
-			<div className="flex flex-col items-center justify-center h-28 bg-gray-100 rounded-xl border border-gray-200">
+		<div className="mt-4 p-6 animate-pulse">
+			<div className="flex flex-col items-center justify-center h-32 bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl border-4 border-purple-300 shadow-lg">
 				<svg
-					className="w-8 h-8 text-blue-400"
+					className="w-12 h-12 text-purple-500 animate-spin-slow"
 					fill="none"
 					viewBox="0 0 24 24"
 					stroke="currentColor"
@@ -246,12 +247,58 @@ function ImageLoader() {
 						d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
 					/>
 				</svg>
-				<p className="mt-1 text-sm font-semibold text-blue-600">
-					Generating picture...
+				<p className="mt-3 text-base font-black text-purple-700">
+					🎨 Creating your picture...
 				</p>
 			</div>
 		</div>
 	);
+}
+
+// Generate a placeholder SVG image for fallback scenarios
+function generatePlaceholderImage(questionId) {
+	const colors = ['#FF6B9D', '#4ECDC4', '#FFE66D', '#A8DADC', '#F1A7FE'];
+	const color = colors[questionId % colors.length];
+	
+	const svg = `
+		<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+			<rect width="600" height="400" fill="${color}" opacity="0.2"/>
+			<circle cx="300" cy="200" r="80" fill="${color}" opacity="0.4"/>
+			<text x="300" y="210" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="${color}" text-anchor="middle">🎨</text>
+			<text x="300" y="280" font-family="Arial, sans-serif" font-size="20" fill="#333" text-anchor="middle">Image Preview</text>
+		</svg>
+	`.trim();
+	
+	return `data:image/svg+xml;base64,${btoa(svg)}`;
+}
+
+// Generate image by calling the Vercel serverless API function
+async function generateImage(prompt) {
+	try {
+		const response = await fetch('/api/generate-image', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ prompt }),
+		});
+
+		if (!response.ok) {
+			console.warn('Image generation API returned error:', response.status);
+			return null; // Will trigger fallback
+		}
+
+		const json = await response.json();
+		
+		// Extract base64 image from Google Imagen response format
+		if (json.predictions && json.predictions[0]?.bytesBase64Encoded) {
+			return `data:image/png;base64,${json.predictions[0].bytesBase64Encoded}`;
+		}
+		
+		console.warn('Unexpected API response format:', json);
+		return null; // Will trigger fallback
+	} catch (error) {
+		console.error('Image generation failed:', error);
+		return null; // Will trigger fallback
+	}
 }
 
 export default function MiaKidsChatbot() {
@@ -325,7 +372,14 @@ export default function MiaKidsChatbot() {
 
 		if (isCorrectChoice) {
 			setLoadingImage(q.questionId);
-			const img = await generateImage(q.correct.prompt);
+			let img = await generateImage(q.correct.prompt);
+			
+			// Use fallback placeholder if API fails or returns null
+			if (!img) {
+				console.log('Using fallback placeholder image for question', q.questionId);
+				img = generatePlaceholderImage(q.questionId);
+			}
+			
 			setLoadingImage(null);
 			setImageByQ((m) => ({ ...m, [q.questionId]: img }));
 			setChatHistory((history) => [
@@ -403,11 +457,11 @@ export default function MiaKidsChatbot() {
 	const ActiveInteraction = () => {
 		if (loadingImage !== null) {
 			return (
-				<div className="flex justify-start px-1 mt-6">
-					<div className="w-10 h-10 mt-1 rounded-full bg-yellow-200 grid place-items-center text-xl shadow-md flex-shrink-0">
+				<div className="flex justify-start px-1 mt-6 animate-fade-in">
+					<div className="w-12 h-12 mt-1 rounded-full bg-gradient-to-br from-yellow-300 to-orange-400 grid place-items-center text-2xl shadow-lg flex-shrink-0 border-3 border-white">
 						👩‍🏫
 					</div>
-					<div className="max-w-[90%] sm:max-w-[72%] rounded-3xl px-5 py-4 shadow-lg bg-white ml-2 rounded-tl-none">
+					<div className="max-w-[90%] sm:max-w-[72%] rounded-3xl px-6 py-5 shadow-2xl bg-gradient-to-br from-white to-blue-50 ml-3 rounded-tl-none border-2 border-blue-200">
 						<ImageLoader />
 					</div>
 				</div>
@@ -416,12 +470,12 @@ export default function MiaKidsChatbot() {
 
 		if (pendingRetry) {
 			return (
-				<div className="mx-auto max-w-[90%] sm:max-w-[72%] mt-4">
-					<div className="rounded-3xl bg-rose-50 border border-rose-200 p-4 shadow-lg">
-						<p className="text-rose-800 font-extrabold mb-3 text-lg">
-							What would you like to do now?
+				<div className="mx-auto max-w-[90%] sm:max-w-[72%] mt-6 animate-fade-in">
+					<div className="rounded-3xl bg-gradient-to-br from-orange-100 to-rose-100 border-4 border-orange-300 p-6 shadow-2xl">
+						<p className="text-rose-900 font-black mb-5 text-2xl flex items-center gap-2">
+							🤔 What would you like to do now?
 						</p>
-						<div className="grid gap-3">
+						<div className="grid gap-4">
 							<BigButton
 								label="📖 Read the story again"
 								onClick={handleRetryReadStory}
@@ -442,12 +496,12 @@ export default function MiaKidsChatbot() {
 
 		if (currentStep?.type === "question") {
 			return (
-				<div className="mx-auto max-w-[90%] sm:max-w-[72%] mt-4">
-					<div className="rounded-3xl bg-white p-4 shadow-lg border border-slate-100">
-						<p className="text-slate-800 font-extrabold mb-4 text-xl">
-							{currentStep.text}
+				<div className="mx-auto max-w-[90%] sm:max-w-[72%] mt-6 animate-fade-in">
+					<div className="rounded-3xl bg-gradient-to-br from-white to-indigo-100 p-6 shadow-2xl border-4 border-indigo-300">
+						<p className="text-indigo-900 font-black mb-5 text-2xl flex items-center gap-2">
+							❓ {currentStep.text}
 						</p>
-						<div className="grid grid-cols-1 gap-3">
+						<div className="grid grid-cols-1 gap-4">
 							{randomizedChoices.map((choice) => (
 								<BigButton
 									key={choice.text}
@@ -480,13 +534,54 @@ export default function MiaKidsChatbot() {
 	};
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-blue-50 via-pink-50 to-amber-50 font-sans">
+		<div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-100 to-yellow-100 font-sans relative overflow-hidden">
+			{/* Animated background elements */}
+			<div className="absolute inset-0 overflow-hidden pointer-events-none">
+				<div className="absolute top-10 left-10 w-32 h-32 bg-pink-300/30 rounded-full blur-3xl animate-float"></div>
+				<div className="absolute top-40 right-20 w-40 h-40 bg-blue-300/30 rounded-full blur-3xl animate-float-delay"></div>
+				<div className="absolute bottom-20 left-1/4 w-36 h-36 bg-yellow-300/30 rounded-full blur-3xl animate-float"></div>
+			</div>
+			
 			<style>
-				{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap'); body { font-family: 'Inter', sans-serif; }`}
+				{`
+					@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap');
+					body { font-family: 'Inter', sans-serif; }
+					
+					@keyframes float {
+						0%, 100% { transform: translateY(0px); }
+						50% { transform: translateY(-20px); }
+					}
+					
+					@keyframes float-delay {
+						0%, 100% { transform: translateY(0px) translateX(0px); }
+						50% { transform: translateY(-30px) translateX(10px); }
+					}
+					
+					@keyframes fade-in {
+						from { opacity: 0; transform: translateY(10px); }
+						to { opacity: 1; transform: translateY(0); }
+					}
+					
+					@keyframes bounce-slow {
+						0%, 100% { transform: translateY(0); }
+						50% { transform: translateY(-5px); }
+					}
+					
+					@keyframes spin-slow {
+						from { transform: rotate(0deg); }
+						to { transform: rotate(360deg); }
+					}
+					
+					.animate-float { animation: float 6s ease-in-out infinite; }
+					.animate-float-delay { animation: float-delay 8s ease-in-out infinite; }
+					.animate-fade-in { animation: fade-in 0.5s ease-out; }
+					.animate-bounce-slow { animation: bounce-slow 2s ease-in-out infinite; }
+					.animate-spin-slow { animation: spin-slow 2s linear infinite; }
+				`}
 			</style>
 			<Header step={questionProgress} totalQuestions={totalQuestions} />
 
-			<main className="max-w-3xl mx-auto px-4 pt-6 pb-8">
+			<main className="max-w-3xl mx-auto px-4 pt-6 pb-8 relative z-10">
 				<div className="space-y-6">
 					{renderChatHistory()}
 					<ActiveInteraction />
