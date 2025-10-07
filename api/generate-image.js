@@ -1,13 +1,30 @@
 // Vercel Serverless Function - proxies image generation requests to the
 // external Imagen API so the API key stays server-side (not exposed to clients).
-module.exports = async (req, res) => {
+// Export as ESM default to match repository "type": "module".
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
   try {
-    const { prompt } = req.body || {};
+    // Vercel usually provides parsed body on req.body, but be defensive and
+    // attempt to parse the raw body if needed.
+    let body = req.body;
+    if (!body || Object.keys(body).length === 0) {
+      try {
+        body = await new Promise((resolve, reject) => {
+          let data = '';
+          req.on('data', chunk => data += chunk);
+          req.on('end', () => resolve(data ? JSON.parse(data) : {}));
+          req.on('error', reject);
+        });
+      } catch (e) {
+        // fall through; body may remain empty
+      }
+    }
+
+    const prompt = body && body.prompt;
     if (!prompt) return res.status(400).json({ error: 'Missing prompt' });
 
     // Prefer a server-side key named GENERATIVE_API_KEY (set this in Vercel).
@@ -37,4 +54,4 @@ module.exports = async (req, res) => {
     console.error('generate-image fn error:', err);
     return res.status(500).json({ error: err.message || String(err) });
   }
-};
+}
