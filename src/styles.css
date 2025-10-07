@@ -1,0 +1,40 @@
+/* Minimal styles for the demo. The component uses Tailwind classes in the source,
+   but for quick hosting we include a few base styles so it looks tidy. */
+html, body, #root { height: 100%; margin: 0; }
+body { font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background: #f8fafc; }
+.max-w-3xl { max-width: 48rem; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.pt-6 { padding-top: 1.5rem; }
+.pb-8 { padding-bottom: 2rem; }
+.space-y-6 > * + * { margin-top: 1.5rem; }
+.rounded-xl { border-radius: 0.75rem; }
+.rounded-3xl { border-radius: 1.5rem; }
+.shadow-lg { box-shadow: 0 10px 15px rgba(0,0,0,0.08); }
+.shadow-md { box-shadow: 0 4px 6px rgba(0,0,0,0.06); }
+.bg-white { background: #ffffff; }
+.text-lg { font-size: 1.125rem; }
+.text-xl { font-size: 1.25rem; }
+.font-extrabold { font-weight: 800; }
+.font-medium { font-weight: 600; }
+.grid { display: grid; }
+.place-items-center { place-items: center; }
+.w-full { width: 100%; }
+.min-h-screen { min-height: 100vh; }
+.p-4 { padding: 1rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-1 { margin-top: .25rem; }
+.h-28 { height: 7rem; }
+.border { border: 1px solid #e6e6e6; }
+.border-slate-200 { border-color: #e2e8f0; }
+.bg-gradient-to-br { background: linear-gradient(135deg,#eff6ff,#fff1f2,#fff7ed); }
+
+/* Helpers for chat alignment */
+.flex { display:flex; }
+.justify-start { justify-content:flex-start; }
+.justify-end { justify-content:flex-end; }
+.items-center { align-items:center; }
+.gap-3 { gap: .75rem; }
+
+/* Buttons basic */
+button { font-family: inherit; }
