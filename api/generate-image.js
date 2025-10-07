@@ -42,9 +42,9 @@ export default async function handler(req, res) {
     const apiKey = process.env.GENERATIVE_API_KEY || process.env.VITE_IMG_API_KEY || '';
     if (!apiKey) return res.status(500).json({ error: 'No API key configured on server' });
 
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagegeneration@006:predict?key=${apiKey}`;
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
 
-    const payload = { instances: [{ prompt }], parameters: { sampleCount: 1 } };
+    const payload = { instances: { prompt }, parameters: { sampleCount: 1 } };
 
     let response;
     try {
