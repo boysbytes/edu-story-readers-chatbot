@@ -42,15 +42,25 @@ export default async function handler(req, res) {
     const apiKey = process.env.GENERATIVE_API_KEY || process.env.VITE_IMG_API_KEY || '';
     if (!apiKey) return res.status(500).json({ error: 'No API key configured on server' });
 
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
+    const apiUrl = `https://api.stability.ai/v1/generation/stable-diffusion-v1-6/text-to-image`;
 
-    const payload = { instances: { prompt }, parameters: { sampleCount: 1 } };
+    const payload = {
+      text_prompts: [{ text: prompt }],
+      cfg_scale: 7,
+      height: 512,
+      width: 768,
+      samples: 1,
+      steps: 30,
+    };
 
     let response;
     try {
       response = await fetch(apiUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
+        },
         body: JSON.stringify(payload),
       });
     } catch (fetchErr) {
@@ -76,8 +86,17 @@ export default async function handler(req, res) {
     }
 
     const json = await response.json();
-    // Return the upstream JSON directly so the client can reuse existing logic.
-    return res.status(200).json(json);
+    
+    // Adapt the response to match the client's expected format.
+    // The client expects: { predictions: [{ bytesBase64Encoded: '...' }] }
+    const adaptedJson = {
+      predictions: json.artifacts.map(art => ({
+        bytesBase64Encoded: art.base64
+      }))
+    };
+
+    // Return the adapted JSON so the client can reuse existing logic.
+    return res.status(200).json(adaptedJson);
   } catch (err) {
     console.error('generate-image fn error:', err);
     return res.status(500).json({ error: err.message || String(err) });
