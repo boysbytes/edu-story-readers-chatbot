@@ -52,7 +52,20 @@ Deploy to Vercel (web UI — easiest for non-developers)
 4. Click "Deploy" and wait a minute — Vercel will build and give you a live URL.
 
 Environment variables (optional)
-- The chatbot code contains a placeholder for an image API key. To use a real image API you would store the key as an environment variable on Vercel and update the code to read it from `process.env`.
+- The chatbot can call an image API. To keep keys safe, set an environment variable in Vercel and the code will read it at build time.
+
+How to name the variable on Vercel
+- Set the environment variable name to: `VITE_IMG_API_KEY`
+- On Vercel: Project → Settings → Environment Variables → Add New
+   - Key: VITE_IMG_API_KEY
+   - Value: (paste your image API key)
+   - Environment: Production (and Preview if you want the key used on preview deployments)
+
+Why `VITE_` prefix?
+- Vite only exposes environment variables to the client-side code if they start with `VITE_`. This is why we ask you to name the variable `VITE_IMG_API_KEY`.
+
+Behavior when the key is missing
+- If you don't set the variable, the app will fall back to a built-in placeholder image generator so the app still works without an API key.
 
 Notes & Troubleshooting
 - If you see layout that looks different, it's because the component uses Tailwind utility classes — I added minimal CSS so the app is usable without configuring Tailwind.
