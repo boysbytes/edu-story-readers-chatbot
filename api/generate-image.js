@@ -67,8 +67,12 @@ export default async function handler(req, res) {
       } catch (e) {
         console.error('Failed to read upstream response body:', e);
       }
-      console.error('generate-image upstream error', { status: response.status, bodySnippet: text });
-      return res.status(502).json({ error: 'Upstream API error', status: response.status, bodySnippet: text });
+      const headersSnippet = {
+        'content-type': response.headers.get('content-type'),
+        'content-length': response.headers.get('content-length'),
+      };
+      console.error('generate-image upstream error', { status: response.status, bodySnippet: text, headers: headersSnippet });
+      return res.status(502).json({ error: 'Upstream API error', status: response.status, bodySnippet: text, headers: headersSnippet });
     }
 
     const json = await response.json();
