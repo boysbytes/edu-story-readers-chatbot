@@ -124,42 +124,37 @@ const STEPS = [
 ];
 
 async function generateImage(prompt) {
-  const apiKey = "";
-  const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
+  // Call the serverless proxy which holds the real API key server-side.
+  const proxyUrl = '/api/generate-image';
 
-  const maxRetries = 5;
-  let delay = 1000;
-  for (let attempt = 0; attempt < maxRetries; attempt++) {
-    try {
-      const payload = { instances: { prompt: prompt }, parameters: { sampleCount: 1 } };
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
+  try {
+    const response = await fetch(proxyUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt }),
+    });
 
-      if (!response.ok) {
-        if (response.status === 429 || response.status >= 500) {
-          throw new Error(`Server error or rate limit: ${response.status}`);
-        }
-        throw new Error(`API error: ${response.statusText}`);
-      }
-
-      const result = await response.json();
-      if (result.predictions && result.predictions.length > 0 && result.predictions[0].bytesBase64Encoded) {
-        return `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
-      } else {
-        throw new Error("Missing image data in successful response.");
-      }
-    } catch (e) {
-      console.warn(`Attempt ${attempt + 1} failed.`, e);
-      if (attempt === maxRetries - 1 || e.message.includes("API error")) {
-        console.warn("Falling back to placeholder image.");
+    if (!response.ok) {
+      console.warn('generateImage proxy responded with non-OK', response.status);
+      const body = await response.json().catch(() => ({}));
+      if (body && body.error && typeof body.error === 'string' && body.error.toLowerCase().includes('no api key')) {
+        console.warn('Server reports no API key configured — using placeholder');
         return await generateImagePlaceholder(prompt);
       }
-      await new Promise(resolve => setTimeout(resolve, delay));
-      delay *= 2;
+      // For other errors, fall back to placeholder
+      return await generateImagePlaceholder(prompt);
     }
+
+    const result = await response.json();
+    if (result.predictions && result.predictions.length > 0 && result.predictions[0].bytesBase64Encoded) {
+      return `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
+    }
+
+    console.warn('generateImage: no predictions in proxy response, falling back to placeholder');
+    return await generateImagePlaceholder(prompt);
+  } catch (e) {
+    console.error('generateImage proxy call failed:', e);
+    return await generateImagePlaceholder(prompt);
   }
 }
 
