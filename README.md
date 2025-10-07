@@ -72,4 +72,47 @@ Notes & Troubleshooting
 - If the build fails on Vercel, open the Deployment > Logs page and copy errors; I can help interpret them.
 - To update the site after changes: commit and push to GitHub; Vercel will automatically rebuild.
 
-Need help? Reply here and tell me which step you’re stuck on (creating the GitHub repo, pushing, or deploying on Vercel) and I’ll give exact copy-paste commands and screenshots-friendly guidance.
+Need help? Reply here and tell me which step you're stuck on (creating the GitHub repo, pushing, or deploying on Vercel) and I'll give exact copy-paste commands and screenshots-friendly guidance.
+
+---
+
+## Embedding the App
+
+This app can be embedded in other websites using iframes. By default, it's configured to allow embedding from **any domain**.
+
+### Quick Embed Code
+
+```html
+<iframe 
+  src="https://your-app-name.vercel.app" 
+  width="100%" 
+  height="600"
+  frameborder="0"
+  title="Mia Kids Educational Chatbot"
+></iframe>
+```
+
+### Configuration
+
+Embedding behavior is controlled by `vercel.json`. See `EMBEDDING_GUIDE.md` for:
+- Different security options (allow all, specific domains, same origin only)
+- How to restrict embedding to your school domains
+- Testing instructions
+- Troubleshooting
+
+**Default Setting**: Allows embedding from all domains (good for development and wide distribution)
+
+**For Production**: Consider restricting to specific school domains for better security.
+
+---
+
+## Documentation Files
+
+- `README.md` - This file (setup and deployment guide)
+- `EMBEDDING_GUIDE.md` - How to embed the app in other websites
+- `TAILWIND_V4_NOTES.md` - Tailwind CSS v4 configuration notes
+- `UI_DESIGN_SYSTEM.md` - Comprehensive UI design system for reuse
+- `IMPLEMENTATION_SUMMARY.md` - Technical implementation details
+- `.github/copilot-instructions.md` - AI assistant development guidelines
+
+
