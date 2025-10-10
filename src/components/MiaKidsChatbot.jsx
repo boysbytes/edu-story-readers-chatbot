@@ -19,7 +19,7 @@ const STEPS = [
 		correct: {
 			text: "A: Mia is looking for her red pencil.",
 			prompt:
-				"Full-colour, child-friendly cartoon of a Malaysian primary school girl named Mia (age 7) looking sad because she cannot find her red pencil. She is in a bright classroom. The red pencil is not in the picture.",
+				"Full-colour, child-friendly cartoon of a Malaysian primary school girl named Mia (age 7) looking sad because she cannot find her red pencil. She is in a bright classroom. The red pencil is not in the picture. Do not generate any text in the image.",
 			response: "That's right! Mia is looking for her red pencil. Here is the picture you described.",
 		},
 		wrong: {
@@ -41,7 +41,7 @@ const STEPS = [
 		correct: {
 			text: "A: Mia looks in her pencil case and under her desk.",
 			prompt:
-				"Medium-shot cartoon of Mia (Malaysian girl, age 7) first looking in her pencil case, then bending down to look under her school desk. Show a curious and slightly worried expression. The red pencil is not there. Bright classroom setting.",
+				"Medium-shot cartoon of Mia (Malaysian girl, age 7) first looking in her pencil case, then bending down to look under her school desk. Show a curious and slightly worried expression. The red pencil is not there. Bright classroom setting. Do not generate any text in the image.",
 			response: "Excellent! Mia looked in her pencil case and under her desk. Here is the picture!",
 		},
 		wrong: {
@@ -63,7 +63,7 @@ const STEPS = [
 		correct: {
 			text: "A: Mia asks her friend Ali for help.",
 			prompt:
-				"Mid-shot, child-safe cartoon of Mia (girl, age 7) asking her friend Ali (Malaysian boy, age 7) for help. Ali should have a friendly, helpful expression. They are in a classroom.",
+				"Mid-shot, child-safe cartoon of Mia (girl, age 7) asking her friend Ali (Malaysian boy, age 7) for help. Ali should have a friendly, helpful expression. They are in a classroom. Do not generate any text in the image.",
 			response: "Yes, Ali is a great friend! You chose the perfect sentence for this picture.",
 		},
 		wrong: {
@@ -85,7 +85,7 @@ const STEPS = [
 		correct: {
 			text: "B: Mia finds the red pencil in the art corner.",
 			prompt:
-				"Full-colour, joyful cartoon of Mia (girl, age 7) finding her red pencil on a table in the school's art corner. Ali (boy, age 7) is smiling next to her. Show paint jars, brushes, and coloured paper on the table to make the location clear. Both children look happy.",
+				"Full-colour, joyful cartoon of Mia (girl, age 7) finding her red pencil on a table in the school's art corner. Ali (boy, age 7) is smiling next to her. Show paint jars, brushes, and coloured paper on the table to make the location clear. Both children look happy. Do not generate any text in the image.",
 			response: "That's it! She found it in the art corner. What a happy picture!",
 		},
 		wrong: {
@@ -106,7 +106,7 @@ const STEPS = [
 		correct: {
 			text: "A: Mia says 'Thank you' to Ali.",
 			prompt:
-				"Close-up shot, child-safe cartoon of Mia (girl, age 7) smiling happily and saying 'Thank you!' to Ali (boy, age 7). Ali is smiling back. They are in the art corner with colourful supplies in the background. Show warmth and friendship.",
+				"Close-up shot, child-safe cartoon of Mia (girl, age 7) smiling happily and saying 'Thank you!' to Ali (boy, age 7). Ali is smiling back. They are in the art corner with colourful supplies in the background. Show warmth and friendship. Do not generate any text in the image.",
 			response: "Perfect! Saying thank you is very important. You finished the story!",
 		},
 		wrong: {
